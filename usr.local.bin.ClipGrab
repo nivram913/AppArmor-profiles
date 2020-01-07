@@ -1,0 +1,73 @@
+# Last Modified: Tue Jan  7 12:25:38 2020
+#include <tunables/global>
+
+/usr/local/bin/ClipGrab {
+  #include <abstractions/X>
+  #include <abstractions/audio>
+  #include <abstractions/base>
+  #include <abstractions/fonts>
+  #include <abstractions/freedesktop.org>
+  #include <abstractions/nameservice>
+  #include <abstractions/openssl>
+  #include <abstractions/user-tmp>
+
+  deny capability sys_ptrace,
+  deny capability sys_admin,
+
+  network netlink dgram,
+
+  mount fstype=fuse,
+  mount fstype=fuse.ClipGrab,
+
+  /usr/bin/ffmpeg PUx,
+
+  /bin/fusermount PUx,
+  /dev/dri/ r,
+  /dev/fuse rw,
+  /etc/machine-id r,
+  /etc/udev/udev.conf r,
+  /lib/x86_64-linux-gnu/ld-*.so mr,
+  /proc/cpuinfo r,
+  /proc/filesystems r,
+  /proc/meminfo r,
+  /proc/sys/kernel/random/boot_id r,
+  /proc/sys/vm/overcommit_memory r,
+  /sys/bus/pci/devices/ r,
+  /sys/devices/pci** r,
+
+  /tmp/.mount_Clip*/ r,
+  /tmp/.mount_Clip*/** mrl,
+  /tmp/.mount_Clip*/usr/libexec/QtWebEngineProcess ix,
+  /tmp/.mount_Clip*/usr/bin/clipgrab mrix,
+
+  /tmp/ r,
+  owner /tmp/#[0-9]* mrw,
+  owner /home/*/#[0-9]* mrw,
+
+  /usr/lib/x86_64-linux-gnu/dri/nouveau_dri.so mr,
+  /usr/local/bin/ClipGrab mr,
+  /usr/share/drirc.d/ r,
+  /usr/share/drirc.d/00-mesa-defaults.conf r,
+
+  owner "/home/*/.config/Philipp Schmieder/*" rwkl,
+  owner /dev/shm/.org.chromium.Chromium.* rw,
+  owner /home/*/.ICEauthority r,
+  owner /home/*/.Xauthority r,
+  owner /home/*/.cache/mesa_shader_cache/index rw,
+  owner /home/*/.config/QtProject.conf rw,
+  owner /home/*/.config/QtProject.conf.* rwl,
+  owner /home/*/.config/QtProject.conf.lock rwk,
+  owner /home/*/.config/user-dirs.dirs r,
+  owner /home/*/.pki/nssdb/cert9.db r,
+  owner /home/*/.pki/nssdb/key4.db r,
+  owner /home/*/.pki/nssdb/pkcs11.txt r,
+  owner /home/*/Public/ rwl,
+  owner /home/*/Public/* rwlk,
+  owner /home/*/.cache/qt_compose_cache_little_endian_* r,
+
+  /proc/ r,
+  owner /proc/** r,
+  owner /proc/*/oom_score_adj w,
+  owner /proc/*/setgroups w,
+
+}
