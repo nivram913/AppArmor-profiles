@@ -1,0 +1,77 @@
+# Last Modified: Thu Jan  9 21:40:48 2020
+#include <tunables/global>
+
+/usr/share/discord/Discord {
+  #include <abstractions/X>
+  #include <abstractions/audio>
+  #include <abstractions/base>
+  #include <abstractions/fonts>
+  #include <abstractions/freedesktop.org>
+  #include <abstractions/nameservice>
+  #include <abstractions/user-tmp>
+
+  signal send set=term peer=/usr/share/discord/Discord,
+  signal send set=usr2 peer=/usr/share/discord/Discord,
+
+  deny ptrace trace peer=unconfined,
+
+  ptrace trace peer=/usr/share/discord/Discord,
+
+  deny /bin/dash x,
+  deny /usr/bin/lsb_release x,
+
+  /dev/ r,
+  /dev/dri/ r,
+  /etc/gtk-3.0/settings.ini r,
+  /etc/machine-id r,
+  /lib/x86_64-linux-gnu/ld-*.so mr,
+  /proc/ r,
+  /proc/*/cmdline r,
+  /proc/*/stat r,
+  /proc/cpuinfo r,
+  /proc/filesystems r,
+  /sys/bus/pci/devices/ r,
+  /sys/devices/pci** r,
+  /sys/devices/system/cpu/cpufreq/policy0/cpuinfo_max_freq r,
+  /sys/devices/virtual/tty/tty0/active r,
+  /usr/lib/x86_64-linux-gnu/dri/nouveau_dri.so mr,
+
+  /usr/share/discord/** r,
+  /usr/share/discord/Discord mrix,
+  /usr/share/discord/libffmpeg.so mr,
+
+  /usr/share/drirc.d/ r,
+  /usr/share/drirc.d/00-mesa-defaults.conf r,
+  /usr/share/fontconfig/conf.avail/ r,
+  /usr/share/themes/Greybird/gtk-3.0/gtk-contained.css r,
+  /usr/share/themes/Greybird/gtk-3.0/gtk.css r,
+  /usr/share/themes/Greybird/gtk-3.0/gtk.gresource r,
+  /usr/share/themes/Greybird/gtk-3.0/settings.ini r,
+
+  owner /dev/pts/1 rw,
+  owner /dev/shm/.org.chromium.Chromium.* rw,
+  owner /home/*/#[0-9]* mrw,
+  owner /home/*/.Xauthority r,
+  owner /home/*/.cache/fontconfig/* r,
+  owner /home/*/.cache/mesa_shader_cache/** rw,
+  owner /home/*/.config/discord/ r,
+  owner /home/*/.config/discord/** m,
+  owner /home/*/.config/discord/** rwk,
+  owner /home/*/.config/user-dirs.dirs r,
+  owner /home/*/.pki/nssdb/cert9.db rwk,
+  owner /home/*/.pki/nssdb/key4.db rwk,
+  owner /home/*/.pki/nssdb/pkcs11.txt r,
+
+  owner /proc/*/fd/ r,
+  owner /proc/*/oom_score_adj w,
+  owner /proc/*/statm r,
+  owner /proc/*/status r,
+  owner /proc/*/task/ r,
+  owner /proc/*/task/*/status r,
+  owner /run/user/1000/discord-ipc-0 w,
+  owner /usr/local/share/fonts/** rw,
+  owner /usr/share/fonts/** rw,
+  owner /usr/share/javascript/*/fonts/** rw,
+  owner /usr/share/poppler/cMap/** rw,
+
+}
