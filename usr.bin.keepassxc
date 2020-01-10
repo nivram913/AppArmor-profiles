@@ -1,0 +1,82 @@
+# Last Modified: Fri Jan 10 16:40:28 2020
+#include <tunables/global>
+
+/usr/bin/keepassxc {
+  #include <abstractions/X>
+  #include <abstractions/base>
+  #include <abstractions/dbus-session-strict>
+  #include <abstractions/dbus-strict>
+  #include <abstractions/dbus-accessibility-strict>
+  #include <abstractions/fonts>
+  #include <abstractions/freedesktop.org>
+  #include <abstractions/nameservice>
+  #include <abstractions/openssl>
+  #include <abstractions/user-tmp>
+
+  /dev/bus/usb/ r,
+  /dev/dri/ r,
+  /dev/tty r,
+  /etc/gtk-3.0/settings.ini r,
+  /etc/fstab r,
+  /lib/x86_64-linux-gnu/ld-*.so mr,
+  /run/udev/data/* r,
+  /sys/bus/ r,
+  /sys/bus/usb/devices/ r,
+  /sys/class/ r,
+  /sys/devices/pci** r,
+  
+  /usr/bin/ r,
+  /usr/bin/keepassxc mr,
+  
+  /usr/lib/x86_64-linux-gnu/dri/nouveau_dri.so mr,
+  /usr/share/drirc.d/ r,
+  /usr/share/drirc.d/00-mesa-defaults.conf r,
+  /usr/share/glib-2.0/schemas/gschemas.compiled r,
+  /usr/share/gvfs/remote-volume-monitors/ r,
+  /usr/share/gvfs/remote-volume-monitors/* r,
+  
+  /usr/share/keepassxc/** r,
+  /usr/share/qt5/translations/qtbase_en.qm r,
+  /usr/share/themes/** r,
+  
+  owner /**/*.kdbx rw,
+  owner /**/ r,
+  owner /**/* r,
+  owner /home/**/* w,
+  owner /home/*/.ICEauthority r,
+  owner /home/*/.Xauthority r,
+  owner /home/*/.cache/** r,
+  owner /home/*/.cache/mesa_shader_cache/index rw,
+  owner /home/*/.config/.[A-Z][0-9]* rwk,
+  owner /home/*/.config/QtProject.conf rw,
+  owner /home/*/.config/QtProject.conf.* rwk,
+  owner /home/*/.config/dconf/user r,
+  owner /home/*/.config/gtk-3.0/bookmarks r,
+  owner /home/*/.config/keepassxc/* rwk,
+  owner /home/*/.mozilla/native-messaging-hosts/org.keepassxc.keepassxc_browser.json w,
+  
+  /proc/** r,
+  owner /run/user/*/*/ rw,
+  owner /run/user/*/*/s rw,
+  owner /run/user/*/dconf/user rw,
+  owner /run/user/*/keyring/ssh rw,
+  owner /run/user/*/kpxc_server rw,
+  
+  dbus send
+    bus=system
+    path=/org/freedesktop/hostname1
+    interface=org.freedesktop.DBus.Properties
+    member=GetAll
+    peer=(label=unconfined),
+    
+  dbus send
+    interface=org.gtk.Private.RemoteVolumeMonitor
+    member={IsSupported,List}
+    peer=(label=unconfined),
+
+  dbus send
+    interface=ca.desrt.dconf.Writer
+    member=Change
+    peer=(label=unconfined),
+
+}

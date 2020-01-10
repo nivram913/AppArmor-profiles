@@ -1,0 +1,122 @@
+# Last Modified: Fri Jan 10 18:05:05 2020
+#include <tunables/global>
+
+/usr/lib/firefox/firefox {
+  #include <abstractions/X>
+  #include <abstractions/audio>
+  #include <abstractions/base>
+  #include <abstractions/dbus-strict>
+  #include <abstractions/dbus-session-strict>
+  #include <abstractions/enchant>
+  #include <abstractions/fonts>
+  #include <abstractions/freedesktop.org>
+  #include <abstractions/nameservice>
+  #include <abstractions/user-tmp>
+
+  deny capability sys_admin,
+  deny capability sys_chroot,
+  deny capability sys_ptrace,
+
+  signal send set=term peer=/usr/lib/firefox/firefox/,
+
+  ptrace trace peer=/usr/lib/firefox/firefox/,
+
+  deny /bin/dash mr,
+  deny /bin/dash x,
+
+  /dev/ r,
+  /dev/dri/ r,
+  /etc/firefox/syspref.js r,
+  /etc/gnome/defaults.list r,
+  /etc/gtk-3.0/settings.ini r,
+  /etc/mailcap r,
+  /etc/mime.types r,
+  /etc/xfce4/defaults.list r,
+  /lib/x86_64-linux-gnu/ld-*.so mr,
+  /proc/** r,
+  /sys/devices/pci** r,
+  /sys/devices/system/cpu/cpu0/cache/index2/size r,
+  /sys/devices/system/cpu/cpufreq/policy0/cpuinfo_max_freq r,
+  /sys/devices/system/cpu/present r,
+  /sys/devices/system/node/ r,
+  /sys/devices/system/node/node0/meminfo r,
+  
+  /usr/bin/keepassxc-proxy PUx,
+  /usr/bin/lsb_release PUx,
+  /usr/lib/firefox/firefox mrix,
+  /usr/lib/x86_64-linux-gnu/dri/nouveau_dri.so mr,
+  
+  /usr/share/drirc.d/ r,
+  /usr/share/drirc.d/00-mesa-defaults.conf r,
+  /usr/share/glib-2.0/schemas/gschemas.compiled r,
+  /usr/share/mozilla/** r,
+  /usr/share/themes/** r,
+  /usr/share/xfce4/applications/ r,
+  /usr/share/xubuntu/applications/ r,
+  /usr/share/xubuntu/applications/defaults.list r,
+  /usr/share/gvfs/remote-volume-monitors/* r,
+  /etc/fstab r,
+  owner /dev/shm/org.mozilla.ipc.* rw,
+  
+  owner /home/*/.ICEauthority r,
+  owner /home/*/.Xauthority r,
+  owner /home/*/.cache/** r,
+  owner /home/*/.cache/event-sound-cache.tdb.e0d55cd9ee8d495eb3e26f251f21fa80.x86_64-pc-linux-gnu rwk,
+  owner /home/*/.cache/mesa_shader_cache/index rw,
+  owner /home/*/.cache/mozilla/** rw,
+  owner /home/*/.config/dconf/user r,
+  owner /home/*/.config/mimeapps.list r,
+  owner /home/*/.config/user-dirs.dirs r,
+  owner /home/*/.config/gtk-3.0/bookmarks r,
+  owner /home/*/.local/share/applications/ r,
+  owner /home/*/.local/share/applications/mimeinfo.cache r,
+  owner /home/*/.local/share/applications/userapp-Thunderbird-YJGCB0.desktop r,
+  owner /home/*/.mozilla/ r,
+  owner /home/*/.mozilla/** rwk,
+  
+  owner /proc/*/gid_map w,
+  owner /proc/*/setgroups w,
+  owner /proc/*/uid_map w,
+  owner /run/user/*/dconf/user rw,
+  
+  # so browsing directories works
+  / r,
+  /**/ r,
+
+  # Default profile allows downloads to ~/Downloads and uploads from ~/Public
+  owner @{HOME}/ r,
+  owner @{HOME}/Public/ r,
+  owner @{HOME}/Public/* r,
+  owner @{HOME}/Downloads/ r,
+  owner @{HOME}/Downloads/* rw,
+  
+  dbus send
+    interface=ca.desrt.dconf.Writer
+    member=Change,
+
+  dbus send
+    interface=org.gtk.Private.RemoteVolumeMonitor
+    member={IsSupported,List}
+    peer=(label=unconfined),
+
+  dbus send
+    bus=system
+    path=/org/freedesktop/hostname1
+    interface=org.freedesktop.DBus.Properties
+    member=GetAll
+    peer=(label=unconfined),
+
+  dbus send
+    bus=system
+    path=/org/freedesktop/RealtimeKit1
+    interface=org.freedesktop.DBus.Properties
+    member=Get
+    peer=(label=unconfined),
+
+  dbus send
+    bus=system
+    path=/org/freedesktop/RealtimeKit1
+    interface=org.freedesktop.RealtimeKit1
+    member={MakeThreadRealtime,MakeThreadRealtimeWithPID},
+
+}
