@@ -1,7 +1,7 @@
 # Last Modified: Fri Jan 10 18:05:05 2020
 #include <tunables/global>
 
-/usr/lib/firefox/firefox {
+/usr/lib/firefox/firefox flags=(complain) {
   #include <abstractions/X>
   #include <abstractions/audio>
   #include <abstractions/base>
@@ -31,14 +31,12 @@
 
   /dev/ r,
   /dev/dri/ r,
-  /etc/firefox/syspref.js r,
   /etc/gnome/defaults.list r,
   /etc/gtk-3.0/settings.ini r,
   /etc/mailcap r,
   /etc/mime.types r,
   /etc/xfce4/defaults.list r,
   /lib/x86_64-linux-gnu/ld-*.so mr,
-  /proc/** r,
   /sys/devices/pci*/**/uevent r,
   /sys/devices/pci*/**/{busnum,idVendor,idProduct} r,
   /sys/devices/pci*/**/{,subsystem_}device r,
@@ -51,15 +49,18 @@
   /usr/share/drirc.d/ r,
   /usr/share/drirc.d/00-mesa-defaults.conf r,
   /usr/share/glib-2.0/schemas/gschemas.compiled r,
-  /usr/share/mozilla/** r,
   /usr/share/themes/** r,
   /usr/share/xfce4/applications/ r,
   /usr/share/xubuntu/applications/ r,
   /usr/share/xubuntu/applications/defaults.list r,
   /usr/share/gvfs/remote-volume-monitors/* r,
   /etc/fstab r,
+  /usr/share/mozilla/** r,
+  /etc/firefox/syspref.js r,
   owner /dev/shm/org.mozilla.ipc.* rw,
-  owner /proc/*/{uid_map,gid_map,setgroups} w,
+  owner /proc/*/{uid_map,gid_map,setgroups} rw,
+  owner /proc/*/{stat,statm,smaps,mountinfo} r,
+  owner /proc/*/task/*/stat r,
   owner /run/user/*/dconf/user rw,
   
   /usr/bin/keepassxc-proxy PUx,
@@ -73,7 +74,6 @@
   
   owner /home/*/.ICEauthority r,
   owner /home/*/.Xauthority r,
-  owner /home/*/.cache/** r,
   owner /home/*/.cache/event-sound-cache* rwk,
   owner /home/*/.cache/mesa_shader_cache/index rw,
   owner /home/*/.config/dconf/user r,
@@ -84,7 +84,7 @@
   owner /home/*/.local/share/applications/* r,
   owner /home/*/.mozilla/ r,
   owner /home/*/.mozilla/** rwk,
-  owner /home/*/.cache/mozilla/** rw,
+  owner /home/*/.cache/mozilla/firefox/** rw,
   
   / r,
   /**/ r,
