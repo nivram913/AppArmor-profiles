@@ -91,7 +91,7 @@
   owner @{HOME}/ r,
   owner @{HOME}/Public/ r,
   owner @{HOME}/Public/Firefox/ r,
-  owner @{HOME}/Public/Firefox/* rw,
+  owner @{HOME}/Public/Firefox/** rw,
   
   dbus send
     interface=ca.desrt.dconf.Writer

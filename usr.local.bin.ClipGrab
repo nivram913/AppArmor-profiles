@@ -61,8 +61,10 @@
   owner /home/*/.pki/nssdb/cert9.db r,
   owner /home/*/.pki/nssdb/key4.db r,
   owner /home/*/.pki/nssdb/pkcs11.txt r,
-  owner /home/*/Public/ rwl,
-  owner /home/*/Public/* rwlk,
+  owner /home/*/ r,
+  owner /home/*/Public/ r,
+  owner /home/*/Public/Clipgrab/ r,
+  owner /home/*/Public/Clipgrab/** rwlk,
   owner /home/*/.cache/qt_compose_cache_little_endian_* r,
 
   /proc/ r,

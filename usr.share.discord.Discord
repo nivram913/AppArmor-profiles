@@ -9,16 +9,22 @@
   #include <abstractions/freedesktop.org>
   #include <abstractions/nameservice>
   #include <abstractions/user-tmp>
+  #include <abstractions/dbus-session-strict>
 
   signal send set=term peer=/usr/share/discord/Discord,
   signal send set=usr2 peer=/usr/share/discord/Discord,
 
+  deny capability sys_ptrace,
   deny ptrace trace peer=unconfined,
 
   ptrace trace peer=/usr/share/discord/Discord,
 
   deny /bin/dash x,
   deny /usr/bin/lsb_release x,
+  deny /usr/** w,
+  deny /etc/apparmor.d/** r,
+  deny /etc/dbus-1/** r,
+  deny /usr/share/dbus-1/** r,
 
   /dev/ r,
   /dev/dri/ r,
@@ -27,10 +33,13 @@
   /etc/fstab r,
   /lib/x86_64-linux-gnu/ld-*.so mr,
   /proc/ r,
-  /proc/*/cmdline r,
-  /proc/*/stat r,
+  owner /proc/*/oom_score_adj w,
+  owner /proc/*/{cmdline,stat,statm,mountinfo,mounts,fd/,task/} r,
+  owner /proc/*/task/*/status r,
+  deny /proc/*/cmdline r,
   /proc/cpuinfo r,
   /proc/filesystems r,
+  
   /sys/bus/pci/devices/ r,
   /sys/devices/pci** r,
   /sys/devices/system/cpu/cpufreq/policy0/cpuinfo_max_freq r,
@@ -39,7 +48,7 @@
 
   /usr/share/discord/** r,
   /usr/share/discord/Discord mrix,
-  /usr/share/discord/libffmpeg.so mr,
+  /usr/share/discord/*.so mr,
 
   /usr/share/drirc.d/ r,
   /usr/share/drirc.d/00-mesa-defaults.conf r,
@@ -50,38 +59,48 @@
   /usr/share/gvfs/remote-volume-monitors/* r,
   /usr/share/glib-2.0/schemas/gschemas.compiled r,
 
-  owner /dev/pts/1 rw,
   owner /dev/shm/.org.chromium.Chromium.* rw,
   owner /home/*/#[0-9]* mrw,
   owner /home/*/.Xauthority r,
   owner /home/*/.cache/fontconfig/* r,
   owner /home/*/.cache/mesa_shader_cache/** rw,
+  owner /home/*/.cache/thumbnails/** r,
   owner /home/*/.config/discord/ r,
   owner /home/*/.config/discord/** m,
   owner /home/*/.config/discord/** rwk,
   owner /home/*/.config/user-dirs.dirs r,
-  owner /home/*/.pki/nssdb/cert9.db rwk,
-  owner /home/*/.pki/nssdb/key4.db rwk,
+  owner /home/*/.pki/nssdb/cert9.db rk,
+  owner /home/*/.pki/nssdb/key4.db rk,
   owner /home/*/.pki/nssdb/pkcs11.txt r,
   owner /home/*/.config/gtk-3.0/bookmarks r,
   owner /home/*/ r,
   owner /home/*/Public/ r,
-  owner /home/*/Public/* r,
-  owner /home/*/Downloads/ rw,
-  owner /home/*/Downloads/* rw,
+  owner /home/*/Public/Discord/ r,
+  owner /home/*/Public/Discord/** rw,
 
-  owner /proc/*/ r,
-  owner /proc/*/** r,
-  owner /proc/*/oom_score_adj w,
-  owner /run/user/1000/discord-ipc-0 w,
-  owner /usr/local/share/fonts/** rw,
-  owner /usr/share/fonts/** rw,
-  owner /usr/share/javascript/*/fonts/** rw,
-  owner /usr/share/poppler/cMap/** rw,
+  owner /run/user/*/discord-ipc-0 rw,
+  owner /usr/local/share/fonts/** r,
+  owner /usr/share/fonts/** r,
+  owner /usr/share/javascript/*/fonts/** r,
+  owner /usr/share/poppler/cMap/** r,
 
-  owner /run/user/*/dconf/user r,
+  owner /run/user/*/dconf/user rw,
   owner /home/*/.config/dconf/user r,
 
-  deny /run/user/*/dconf/user rw,
+  dbus send
+    bus=system
+    path=/org/freedesktop/hostname1
+    interface=org.freedesktop.DBus.Properties
+    member=GetAll,
+  
+  dbus send
+    bus=session
+    interface=ca.desrt.dconf.Writer
+    member=Change,
+
+  dbus send
+    bus=session
+    interface=org.gtk.Private.RemoteVolumeMonitor
+    member={IsSupported,List},
 
 }
