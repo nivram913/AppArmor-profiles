@@ -167,6 +167,8 @@
       owner /tmp/Temp-*/mesa_shader_cache/index rw,
       owner /tmp/Temp-*/mesa_shader_cache/**/*.tmp rw,
       
+      owner @{HOME}/Public/Firefox/** r,
+      
       dbus send
         bus=system
         path=/org/freedesktop/RealtimeKit1
