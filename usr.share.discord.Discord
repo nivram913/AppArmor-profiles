@@ -11,8 +11,7 @@
   #include <abstractions/user-tmp>
   #include <abstractions/dbus-session-strict>
 
-  signal send set=term peer=/usr/share/discord/Discord,
-  signal send set=usr2 peer=/usr/share/discord/Discord,
+  signal send set=(term, usr2) peer=/usr/share/discord/Discord,
 
   deny capability sys_ptrace,
   deny ptrace trace peer=unconfined,
@@ -69,13 +68,13 @@
   owner /home/*/.config/discord/** m,
   owner /home/*/.config/discord/** rwk,
   owner /home/*/.config/user-dirs.dirs r,
-  owner /home/*/.pki/nssdb/cert9.db rk,
-  owner /home/*/.pki/nssdb/key4.db rk,
+  owner /home/*/.pki/nssdb/cert9.db r,
+  owner /home/*/.pki/nssdb/key4.db r,
   owner /home/*/.pki/nssdb/pkcs11.txt r,
   owner /home/*/.config/gtk-3.0/bookmarks r,
-  owner /home/*/ r,
-  owner /home/*/Public/ r,
-  owner /home/*/Public/Discord/ r,
+  
+  / r,
+  /**/ r,
   owner /home/*/Public/Discord/** rw,
 
   owner /run/user/*/discord-ipc-0 rw,

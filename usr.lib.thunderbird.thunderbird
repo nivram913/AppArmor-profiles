@@ -1,7 +1,7 @@
 # Last Modified: Sat Jan 11 20:09:06 2020
 #include <tunables/global>
 
-/home/nivram/bin/thunderbird/thunderbird-bin {
+/usr/lib/thunderbird/thunderbird {
   #include <abstractions/X>
   #include <abstractions/audio>
   #include <abstractions/base>
@@ -20,6 +20,7 @@
   /etc/gtk-3.0/settings.ini r,
   /etc/mime.types r,
   /etc/xfce4/defaults.list r,
+  /etc/thunderbird/syspref.js r,
   /proc/*/net/arp r,
   /proc/*/net/route r,
   /sys/devices/pci*/**/{,subsystem_}device r,
@@ -29,8 +30,7 @@
   /sys/devices/system/cpu/cpufreq/policy0/cpuinfo_max_freq r,
   /sys/devices/system/cpu/present r,
   
-  /home/nivram/.thunderbird/*/pepmda/bin/pep-json-server PUx,
-  /home/*/bin/thunderbird/thunderbird-bin mr,
+  /usr/lib/thunderbird/thunderbird mrix,
   /lib/x86_64-linux-gnu/ld-*.so mr,
   /usr/bin/dig PUx,
   /usr/bin/gpg PUx,
@@ -72,17 +72,14 @@
   owner /home/*/.local/share/applications/ r,
   owner /home/*/.local/share/applications/* r,
   owner /home/*/.thunderbird/** rwk,
+  #owner /home/*/.thunderbird/*/pepmda/bin/pep-json-server PUx,
   
   / r,
   /**/ r,
-  owner /home/*/Public/ r,
-  owner /home/*/Public/Thunderbird/ r,
   owner /home/*/Public/Thunderbird/** rw,
   
-  owner /home/*/bin/thunderbird/** r,
-  owner /home/*/bin/thunderbird/*.so mr,
-  owner /home/*/bin/thunderbird/update.test/ w,
-  owner /home/*/bin/update.test/ w,
+  /usr/lib/thunderbird/thunderbird/** r,
+  /usr/lib/thunderbird/thunderbird/*.so mr,
   
   dbus send
     bus=system

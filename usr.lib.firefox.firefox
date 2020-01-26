@@ -190,7 +190,8 @@
       owner /proc/*/task/*/stat r,
       owner /proc/*/{statm,stat,smaps} r,
       owner /dev/shm/org.mozilla.ipc.* rw,
-      owner /home/*/.mozilla/firefox/*/gmp-*/*/*.so mr,
+      owner /home/*/.mozilla/firefox/*/gmp-*/**/*.so mr,
+      owner /home/*/.mozilla/firefox/*/gmp*/** r,
   }
 
 }
