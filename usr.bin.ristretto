@@ -1,0 +1,58 @@
+# Last Modified: Mon Jan 13 19:21:08 2020
+#include <tunables/global>
+
+/usr/bin/ristretto {
+  #include <abstractions/X>
+  #include <abstractions/base>
+  #include <abstractions/dbus-session-strict>
+  #include <abstractions/fonts>
+  #include <abstractions/freedesktop.org>
+  #include <abstractions/user-tmp>
+
+  /etc/gnome/defaults.list r,
+  /etc/magic r,
+  /etc/xfce4/defaults.list r,
+  
+  /lib/x86_64-linux-gnu/ld-*.so mr,
+  /usr/bin/ristretto mr,
+  /usr/bin/gimp-* PUx,
+  
+  /usr/share/themes/** r,
+  /usr/share/xfce4/applications/ r,
+  /usr/share/xubuntu/applications/ r,
+  /usr/share/xubuntu/applications/* r,
+  owner /proc/*/fd/ r,
+  
+  owner /home/*/.cache/thumbnails/** r,
+  owner /home/*/.config/gtk-2.0/gtkfilechooser.ini rw,
+  owner /home/*/.config/gtk-2.0/gtkfilechooser.ini.* rw,
+  owner /home/*/.config/gtk-3.0/bookmarks r,
+  owner /home/*/.config/mimeapps.list r,
+  owner /home/*/.config/ristretto/accels.scm rw,
+  owner /home/*/.config/user-dirs.dirs r,
+  owner /home/*/.local/share/applications/ r,
+  owner /home/*/.local/share/applications/mimeinfo.cache r,
+  owner /home/*/.local/share/recently-used.xbel w,
+  owner /home/*/.local/share/recently-used.xbel.* rw,
+  
+  / r,
+  /**/ r,
+  /**/*.[bB][mM][pP]     r,
+  /**/*.[gG][iI][fF]     r,
+  /**/*.[jJ][pP][gG]     r,
+  /**/*.[jJ][pP][eE][gG] r,
+  /**/*.[pP][nN][gG]     r,
+  /**/*.[eE][pP][sS]     r,
+  /**/*.[tT][iI][fF]     r,
+  /**/*.[tT][iI][fF][fF] r,
+  /**/*.[wW][eE][bB][pP] r,
+  /**/*.[pP][sS][dD]     r,
+  /**/*.[rR][aA][wW]     r,
+  /**/*.[sS][vV][gG]     r,
+  
+  dbus send
+    bus=session
+    interface=org.freedesktop.thumbnails.Thumbnailer1
+    member=Queue,
+
+}
