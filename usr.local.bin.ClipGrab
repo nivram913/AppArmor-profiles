@@ -58,6 +58,7 @@
   owner /home/*/.config/QtProject.conf.* rwl,
   owner /home/*/.config/QtProject.conf.lock rwk,
   owner /home/*/.config/user-dirs.dirs r,
+  owner /home/*/.config/#[0-9]* rw,
   owner /home/*/.pki/nssdb/cert9.db r,
   owner /home/*/.pki/nssdb/key4.db r,
   owner /home/*/.pki/nssdb/pkcs11.txt r,

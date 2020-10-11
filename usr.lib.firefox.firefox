@@ -57,6 +57,7 @@
   /etc/fstab r,
   /usr/share/mozilla/** r,
   /etc/firefox/syspref.js r,
+  /run/pulse/native rw,
   owner /dev/shm/org.mozilla.ipc.* rw,
   owner /proc/*/{uid_map,gid_map,setgroups} rw,
   owner /proc/*/{stat,statm,smaps,mountinfo} r,
