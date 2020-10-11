@@ -49,6 +49,7 @@
 
   / r,
   /**/ r,
+  owner /home/*/Public/Chromium/** rw,
 
   owner /dev/shm/.org.chromium.Chromium.* rw,
   owner /home/*/#[0-9]* mrw,
