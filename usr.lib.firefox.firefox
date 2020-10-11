@@ -29,29 +29,16 @@
   deny /bin/dash mr,
   deny /bin/dash x,
 
-  /dev/ r,
-  /dev/dri/ r,
   /etc/gnome/defaults.list r,
   /etc/gtk-3.0/settings.ini r,
   /etc/mailcap r,
   /etc/mime.types r,
   /etc/xfce4/defaults.list r,
   /lib/x86_64-linux-gnu/ld-*.so mr,
-  /sys/devices/pci*/**/uevent r,
-  /sys/devices/pci*/**/{busnum,idVendor,idProduct} r,
-  /sys/devices/pci*/**/{,subsystem_}device r,
-  /sys/devices/pci*/**/{,subsystem_}vendor r,
-  /sys/devices/system/cpu/cpu0/cache/index2/size r,
-  /sys/devices/system/cpu/cpufreq/policy0/cpuinfo_max_freq r,
-  /sys/devices/system/cpu/present r,
-  /sys/devices/system/node/ r,
-  /sys/devices/system/node/node0/meminfo r,
-  /usr/share/drirc.d/ r,
+  /sys/** r,
   /usr/share/drirc.d/00-mesa-defaults.conf r,
   /usr/share/glib-2.0/schemas/gschemas.compiled r,
   /usr/share/themes/** r,
-  /usr/share/xfce4/applications/ r,
-  /usr/share/xubuntu/applications/ r,
   /usr/share/xubuntu/applications/defaults.list r,
   /usr/share/gvfs/remote-volume-monitors/* r,
   /etc/fstab r,
@@ -60,7 +47,7 @@
   /run/pulse/native rw,
   owner /dev/shm/org.mozilla.ipc.* rw,
   owner /proc/*/{uid_map,gid_map,setgroups} rw,
-  owner /proc/*/{stat,statm,smaps,mountinfo} r,
+  owner /proc/*/{cgroup,stat,statm,smaps,mountinfo} r,
   owner /proc/*/task/*/stat r,
   owner /run/user/*/dconf/user rw,
   
@@ -97,28 +84,43 @@
 
   dbus send
     interface=org.gtk.Private.RemoteVolumeMonitor
-    member={IsSupported,List}
-    peer=(label=unconfined),
+    member={IsSupported,List},
+
+  dbus send
+    bus=session
+    path=/org/gtk/vfs/Daemon
+    interface=org.gtk.vfs.Daemon
+    member={ListMonitorImplementations,GetConnection},
+
+  dbus send
+    bus=session
+    path=/org/gtk/vfs/mounttracker
+    interface=org.gtk.vfs.MountTracker
+    member={ListMountableInfo,LookupMount,ListMounts2},
 
   dbus send
     bus=system
     path=/org/freedesktop/hostname1
     interface=org.freedesktop.DBus.Properties
-    member=GetAll
-    peer=(label=unconfined),
+    member=GetAll,
 
   dbus send
     bus=system
     path=/org/freedesktop/RealtimeKit1
     interface=org.freedesktop.DBus.Properties
-    member=Get
-    peer=(label=unconfined),
+    member=Get,
 
   dbus send
     bus=system
     path=/org/freedesktop/RealtimeKit1
     interface=org.freedesktop.RealtimeKit1
     member={MakeThreadRealtime,MakeThreadRealtimeWithPID},
+
+  dbus send
+    bus=session
+    path=/ScreenSaver
+    interface=org.freedesktop.ScreenSaver
+    member={Inhibit,UnInhibit},
 
   profile firefox_child_sandboxed {
       #include <abstractions/X>
