@@ -1,7 +1,7 @@
 # Last Modified: Mon Jan 13 19:53:14 2020
 #include <tunables/global>
 
-/usr/bin/atril {
+profile atril /usr/bin/atril {
   #include <abstractions/X>
   #include <abstractions/base>
   #include <abstractions/dbus-session-strict>

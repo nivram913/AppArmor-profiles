@@ -1,7 +1,7 @@
 # Last Modified: Sat Jan 11 20:09:06 2020
 #include <tunables/global>
 
-/home/nivram/bin/thunderbird-bin/thunderbird {
+profile thunderbird /home/nivram/bin/thunderbird-bin/thunderbird {
   #include <abstractions/X>
   #include <abstractions/audio>
   #include <abstractions/base>

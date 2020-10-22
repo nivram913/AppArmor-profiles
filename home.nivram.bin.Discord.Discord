@@ -1,7 +1,7 @@
 # Last Modified: Thu Oct  8 22:34:26 2020
 #include <tunables/global>
 
-/home/nivram/bin/Discord/Discord {
+profile discord /home/nivram/bin/Discord/Discord {
   #include <abstractions/X>
   #include <abstractions/audio>
   #include <abstractions/base>

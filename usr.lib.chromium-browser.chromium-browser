@@ -1,7 +1,7 @@
 # Last Modified: Sun Oct  4 16:52:31 2020
 #include <tunables/global>
 
-/usr/lib/chromium-browser/chromium-browser {
+profile chromium /usr/lib/chromium-browser/chromium-browser {
   #include <abstractions/X>
   #include <abstractions/audio>
   #include <abstractions/base>

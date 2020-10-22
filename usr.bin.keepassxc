@@ -1,7 +1,7 @@
 # Last Modified: Fri Jan 10 16:40:28 2020
 #include <tunables/global>
 
-/usr/bin/keepassxc {
+profile keepassxc /usr/bin/keepassxc {
   #include <abstractions/X>
   #include <abstractions/base>
   #include <abstractions/dbus-session-strict>

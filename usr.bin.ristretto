@@ -1,7 +1,7 @@
 # Last Modified: Mon Jan 13 19:21:08 2020
 #include <tunables/global>
 
-/usr/bin/ristretto {
+profile ristretto /usr/bin/ristretto {
   #include <abstractions/X>
   #include <abstractions/base>
   #include <abstractions/dbus-session-strict>
