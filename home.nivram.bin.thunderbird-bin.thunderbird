@@ -87,11 +87,23 @@ profile thunderbird /home/nivram/bin/thunderbird-bin/thunderbird {
   dbus send
     bus=session
     interface=ca.desrt.dconf.Writer
-    member=Change,
+    member={Change,Notify},
 
   dbus send
     bus=session
+    path=/org/gtk/Private/RemoteVolumeMonitor
     interface=org.gtk.Private.RemoteVolumeMonitor
     member={IsSupported,List},
 
+  dbus send
+    bus=session
+    path=/org/gtk/vfs/Daemon
+    interface=org.gtk.vfs.Daemon
+    member={ListMonitorImplementations,GetConnection},
+  
+  dbus send
+    bus=session
+    path=/org/gtk/vfs/mounttracker
+    interface=org.gtk.vfs.MountTracker
+    member={ListMountableInfo,ListMounts2,LookupMount},
 }

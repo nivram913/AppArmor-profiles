@@ -17,11 +17,11 @@ profile discord /home/nivram/bin/Discord/Discord {
   capability sys_chroot,
   capability sys_ptrace,
 
-  signal send set=term peer=/home/nivram/bin/Discord/Discord,
+  signal send set=term peer=discord,
 
   deny ptrace read peer=unconfined,
 
-  ptrace (read,trace) peer=/home/nivram/bin/Discord/Discord,
+  ptrace (read,trace) peer=discord,
 
   deny /bin/dash mrx,
   deny /usr/bin/python3.6 mr,
@@ -45,6 +45,7 @@ profile discord /home/nivram/bin/Discord/Discord {
   /usr/bin/xdg-open Ux,
   /usr/bin/xdg-open r,
   /usr/share/fontconfig/conf.avail/ r,
+  /usr/share/drirc.d/00-mesa-defaults.conf r,
   /usr/share/themes/** r,
   /usr/share/gvfs/remote-volume-monitors/* r,
   /usr/share/glib-2.0/schemas/gschemas.compiled r,
@@ -56,11 +57,13 @@ profile discord /home/nivram/bin/Discord/Discord {
   owner /dev/shm/.org.chromium.Chromium.* rw,
   owner /run/user/*/dconf/user r,
   owner /home/*/.Xauthority r,
+  owner /home/*/.cache/mesa_shader_cache/* rwk,
   owner /home/*/.cache/fontconfig/* rw,
   owner /home/*/.cache/fontconfig/* wl,
   owner /home/*/.config/discord/** mrwk,
   owner /home/*/.config/user-dirs.dirs r,
   owner /home/*/.config/gtk-3.0/bookmarks r,
+  owner /home/*/#[0-9]* mrw,
   owner /home/*/bin/Discord/** r,
   owner /home/*/bin/Discord/**.so mr,
   owner /proc/*/{clear_refs,gid_map,setgroups,uid_map} w,

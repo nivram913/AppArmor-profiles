@@ -18,7 +18,7 @@ profile chromium /usr/lib/chromium-browser/chromium-browser {
   capability sys_ptrace,
 
   deny ptrace peer=unconfined,
-  ptrace read peer=/usr/lib/chromium-browser/chromium-browser,
+  ptrace read peer=chromium,
 
   deny /bin/dash mr,
 
@@ -56,8 +56,7 @@ profile chromium /usr/lib/chromium-browser/chromium-browser {
   owner /home/*/.Xauthority r,
   owner /home/*/.cache/chromium/** rw,
   owner /home/*/.cache/fontconfig/* r,
-  owner /home/*/.cache/mesa_shader_cache/** r,
-  owner /home/*/.cache/mesa_shader_cache/index rw,
+  owner /home/*/.cache/mesa_shader_cache/** rwk,
   owner /home/*/.config/gtk-3.0/bookmarks r,
   owner /home/*/.config/ r,
   owner /home/*/.config/chromium/ r,

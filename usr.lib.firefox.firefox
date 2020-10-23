@@ -17,14 +17,14 @@ profile firefox /usr/lib/firefox/firefox {
   capability sys_admin,
   capability sys_chroot,
 
-  signal send set=(term, kill) peer=/usr/lib/firefox/firefox//firefox_child_sandboxed,
-  signal send set=(term, kill) peer=/usr/lib/firefox/firefox//plugin_container,
+  signal send set=(term, kill) peer=firefox//firefox_child_sandboxed,
+  signal send set=(term, kill) peer=firefox//plugin_container,
 
-  ptrace trace peer=/usr/lib/firefox/firefox//firefox_child_sandboxed,
-  ptrace trace peer=/usr/lib/firefox/firefox//plugin_container,
+  ptrace trace peer=firefox//firefox_child_sandboxed,
+  ptrace trace peer=firefox//plugin_container,
   
-  unix (send, receive) addr=none peer=(label=/usr/lib/firefox/firefox//firefox_child_sandboxed),
-  unix (send, receive) addr=none peer=(label=/usr/lib/firefox/firefox//plugin_container),
+  unix (send, receive) addr=none peer=(label=firefox//firefox_child_sandboxed),
+  unix (send, receive) addr=none peer=(label=firefox//plugin_container),
 
   deny /bin/dash mr,
   deny /bin/dash x,
@@ -64,6 +64,7 @@ profile firefox /usr/lib/firefox/firefox {
   owner /home/*/.Xauthority r,
   owner /home/*/.cache/event-sound-cache* rwk,
   owner /home/*/.cache/mesa_shader_cache/index rw,
+  owner /home/*/.cache/fontconfig/* rwk,
   owner /home/*/.config/dconf/user r,
   owner /home/*/.config/mimeapps.list r,
   owner /home/*/.config/user-dirs.dirs r,
@@ -133,9 +134,9 @@ profile firefox /usr/lib/firefox/firefox {
       audit deny capability sys_chroot,
       audit deny capability sys_ptrace,
       
-      unix (send, receive) addr=none peer=(label=/usr/lib/firefox/firefox),
+      unix (send, receive) addr=none peer=(label=firefox),
       
-      signal (receive) peer=/usr/lib/firefox/firefox,
+      signal (receive) peer=firefox,
 
       owner /dev/shm/org.mozilla.ipc.* rw,
       /usr/lib/firefox/firefox mr,
@@ -180,9 +181,9 @@ profile firefox /usr/lib/firefox/firefox {
   profile plugin_container {
       #include <abstractions/base>
       
-      unix (send, receive) addr=none peer=(label=/usr/lib/firefox/firefox),
+      unix (send, receive) addr=none peer=(label=firefox),
       
-      signal (receive) peer=/usr/lib/firefox/firefox,
+      signal (receive) peer=firefox,
       
       /usr/lib/firefox/plugin-container mr,
       /sys/devices/system/cpu/present r,
