@@ -39,6 +39,7 @@ profile chromium /usr/lib/chromium-browser/chromium-browser {
   /usr/bin/xdg-settings r,
   /run/udev/data/* r,
   /usr/lib/chromium-browser/chromium-browser mrix,
+  /usr/lib/chromium-browser/crashpad_handler mrix,
   /usr/lib/x86_64-linux-gnu/dri/nouveau_dri.so mr,
   /usr/share/drirc.d/ r,
   /usr/share/drirc.d/00-mesa-defaults.conf r,
