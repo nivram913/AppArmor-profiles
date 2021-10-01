@@ -41,6 +41,7 @@ profile firefox /usr/lib/firefox/firefox {
   /usr/share/themes/** r,
   /usr/share/xubuntu/applications/defaults.list r,
   /usr/share/gvfs/remote-volume-monitors/* r,
+  /usr/share/glvnd/egl_vendor.d/* r,
   /etc/fstab r,
   /usr/share/mozilla/** r,
   /etc/firefox/syspref.js r,
@@ -50,6 +51,7 @@ profile firefox /usr/lib/firefox/firefox {
   owner /proc/*/{cgroup,stat,statm,smaps,mountinfo} r,
   owner /proc/*/task/*/stat r,
   owner /run/user/*/dconf/user rw,
+  owner /run/user/*/ICEauthority r,
   
   /usr/bin/keepassxc-proxy PUx,
   /usr/bin/lsb_release PUx,
@@ -63,7 +65,7 @@ profile firefox /usr/lib/firefox/firefox {
   owner /home/*/.ICEauthority r,
   owner /home/*/.Xauthority r,
   owner /home/*/.cache/event-sound-cache* rwk,
-  owner /home/*/.cache/mesa_shader_cache/index rw,
+  owner /home/*/.cache/mesa_shader_cache/** rwk,
   owner /home/*/.cache/fontconfig/* rwk,
   owner /home/*/.config/dconf/user r,
   owner /home/*/.config/mimeapps.list r,
@@ -159,6 +161,7 @@ profile firefox /usr/lib/firefox/firefox {
       /sys/devices/pci*/**/{busnum,idVendor,idProduct} r,
       /sys/devices/pci*/**/{,subsystem_}device r,
       /sys/devices/pci*/**/{,subsystem_}vendor r,
+      /usr/share/gvfs/** r,
       
       owner /home/*/.cache/mozilla/firefox/** r,
       owner /home/*/.mozilla/firefox/*/extensions/*.xpi r,
