@@ -45,6 +45,7 @@ profile thunderbird /home/nivram/bin/thunderbird-bin/thunderbird {
   /usr/share/xubuntu/applications/ r,
   /usr/share/xubuntu/applications/defaults.list r,
   /usr/share/gvfs/remote-volume-monitors/* r,
+  /usr/share/glvnd/egl_vendor.d/* r,
   /etc/fstab r,
   owner /dev/shm/org.chromium.* rw,
   owner /dev/shm/org.mozilla.ipc.* rw,
@@ -58,7 +59,7 @@ profile thunderbird /home/nivram/bin/thunderbird-bin/thunderbird {
   owner /home/*/.Xauthority r,
   owner /home/*/.cache/event-sound-cache* rwk,
   owner /home/*/.cache/fontconfig/* r,
-  owner /home/*/.cache/mesa_shader_cache/index rw,
+  owner /home/*/.cache/mesa_shader_cache/** rwk,
   owner /home/*/.cache/thumbnails/** r,
   owner /home/*/.cache/thunderbird/** rw,
   owner /home/*/.config/dconf/user r,
@@ -83,6 +84,18 @@ profile thunderbird /home/nivram/bin/thunderbird-bin/thunderbird {
     path=/org/freedesktop/hostname1
     interface=org.freedesktop.DBus.Properties
     member=GetAll,
+    
+  dbus send
+    bus=system
+    path=/org/freedesktop/RealtimeKit1
+    interface=org.freedesktop.DBus.Properties
+    member=Get,
+  
+  dbus send
+    bus=system
+    path=/org/freedesktop/RealtimeKit1
+    interface=org.freedesktop.RealtimeKit1
+    member=MakeThreadRealtime,
   
   dbus send
     bus=session
