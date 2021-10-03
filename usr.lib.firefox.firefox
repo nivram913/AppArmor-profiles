@@ -165,6 +165,7 @@ profile firefox /usr/lib/firefox/firefox {
       
       owner /home/*/.cache/mozilla/firefox/** r,
       owner /home/*/.mozilla/firefox/*/extensions/*.xpi r,
+      owner /home/*/.mozilla/firefox/*/features/**.xpi r,
       owner /home/*/.mozilla/firefox/*/storage/default/** r,
       owner /tmp/mozilla-temp-* rw,
       owner /tmp/cubeb-shm-*.{input,output} rw,
