@@ -11,11 +11,15 @@ profile ristretto /usr/bin/ristretto {
   #include <abstractions/X>
 
   /etc/gnome/defaults.list r,
+  /etc/gtk-3.0/settings.ini r,
   /etc/magic r,
+  /etc/fstab r,
   /etc/xfce4/defaults.list r,
   /usr/share/themes/** r,
   /usr/share/xubuntu/applications/* r,
   /usr/share/gvfs/remote-volume-monitors/*.monitor r,
+  /usr/share/glib-2.0/schemas/gschemas.compiled r,
+  owner /proc/*/{mounts,mountinfo} r,
   
   /lib/x86_64-linux-gnu/ld-*.so mr,
   /usr/bin/ristretto mr,
