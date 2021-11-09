@@ -1,27 +1,25 @@
-# Last Modified: Mon Jan 13 19:21:08 2020
+# Tested on Ristretto 0.10.0
+
 #include <tunables/global>
 
 profile ristretto /usr/bin/ristretto {
-  #include <abstractions/X>
   #include <abstractions/base>
   #include <abstractions/dbus-session-strict>
   #include <abstractions/fonts>
   #include <abstractions/freedesktop.org>
   #include <abstractions/user-tmp>
+  #include <abstractions/X>
 
   /etc/gnome/defaults.list r,
   /etc/magic r,
   /etc/xfce4/defaults.list r,
+  /usr/share/themes/** r,
+  /usr/share/xubuntu/applications/* r,
   
   /lib/x86_64-linux-gnu/ld-*.so mr,
   /usr/bin/ristretto mr,
+  # Allow GIMP to edit images
   /usr/bin/gimp-* PUx,
-  
-  /usr/share/themes/** r,
-  /usr/share/xfce4/applications/ r,
-  /usr/share/xubuntu/applications/ r,
-  /usr/share/xubuntu/applications/* r,
-  owner /proc/*/fd/ r,
   
   owner /home/*/.cache/thumbnails/** r,
   owner /home/*/.config/gtk-2.0/gtkfilechooser.ini rw,
@@ -30,7 +28,6 @@ profile ristretto /usr/bin/ristretto {
   owner /home/*/.config/mimeapps.list r,
   owner /home/*/.config/ristretto/accels.scm rw,
   owner /home/*/.config/user-dirs.dirs r,
-  owner /home/*/.local/share/applications/ r,
   owner /home/*/.local/share/applications/mimeinfo.cache r,
   owner /home/*/.local/share/recently-used.xbel w,
   owner /home/*/.local/share/recently-used.xbel.* rw,
@@ -54,5 +51,4 @@ profile ristretto /usr/bin/ristretto {
     bus=session
     interface=org.freedesktop.thumbnails.Thumbnailer1
     member=Queue,
-
 }

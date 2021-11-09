@@ -1,59 +1,59 @@
-# Last Modified: Fri Jan 10 01:33:40 2020
+# Tested on Pidgin 2.13.0
+
 #include <tunables/global>
 
 profile pidgin /usr/bin/pidgin {
   #include <abstractions/audio>
-  #include <abstractions/X>
   #include <abstractions/base>
+  #include <abstractions/dbus-strict>
   #include <abstractions/fonts>
   #include <abstractions/freedesktop.org>
   #include <abstractions/nameservice>
   #include <abstractions/user-tmp>
-  #include <abstractions/dbus-strict>
+  #include <abstractions/X>
 
   deny ptrace trace peer=unconfined,
 
-  /dev/ r,
   /dev/dri/ r,
+  /dev/ r,
   /etc/gnome/defaults.list r,
   /etc/machine-id r,
   /etc/xfce4/defaults.list r,
-  /lib/x86_64-linux-gnu/ld-*.so mr,
-  /sys/devices/system/node/ r,
   /sys/devices/system/node/node0/meminfo r,
-  /usr/bin/pidgin mr,
+  /sys/devices/system/node/ r,
+  /usr/share/themes/ r,
+  /usr/share/themes/** r,
+  /usr/share/xfce4/applications/ r,
+  /usr/share/xubuntu/applications/defaults.list r,
+  /usr/share/xubuntu/applications/ r,
+  owner /proc/*/fd/ r,
+  
+  /lib/x86_64-linux-gnu/ld-*.so mr,
   /usr/bin/sensible-browser PUx,
   /usr/lib/pidgin/* mr,
   /usr/lib/purple-2/* mr,
   /usr/lib/x86_64-linux-gnu/gstreamer1.0/gstreamer-1.0/gst-plugin-scanner PUx,
-  /usr/share/themes/ r,
-  /usr/share/themes/** r,
-  /usr/share/xfce4/applications/ r,
-  /usr/share/xubuntu/applications/ r,
-  /usr/share/xubuntu/applications/defaults.list r,
-  owner /home/*/.ICEauthority r,
-  owner /home/*/.Xauthority r,
+  /usr/bin/pidgin mr,
+  owner /run/user/*/orcexec.* mrw,
+  
   owner /home/*/.cache/gstreamer-1.0/registry.x86_64.bin rw,
   owner /home/*/.cache/gstreamer-1.0/registry.x86_64.bin.tmp* rw,
   owner /home/*/.config/mimeapps.list r,
-  owner /home/*/.local/share/applications/ r,
+  owner /home/*/.ICEauthority r,
   owner /home/*/.local/share/applications/mimeinfo.cache r,
+  owner /home/*/.local/share/applications/ r,
   owner /home/*/.purple/** rw,
-  owner /proc/*/fd/ r,
-  owner /run/user/*/orcexec.* mrw,
+  owner /home/*/.Xauthority r,
   
   dbus receive
     bus=system
     path=/org/freedesktop/NetworkManager
     interface=org.freedesktop.NetworkManager
-    member={CheckPermissions,DeviceAdded,DeviceRemoved,StateChanged,PropertiesChanged}
-    peer=(label=unconfined),
+    member={CheckPermissions,DeviceAdded,DeviceRemoved,StateChanged,PropertiesChanged},
 
   dbus send
     bus=system
     path=/org/freedesktop/NetworkManager
     interface=org.freedesktop.NetworkManager
-    member=state
-    peer=(label=unconfined),
-
+    member=state,
 }

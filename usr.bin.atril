@@ -1,25 +1,35 @@
-# Last Modified: Mon Jan 13 19:53:14 2020
+# Tested on Atril 1.24.0
+
 #include <tunables/global>
 
 profile atril /usr/bin/atril {
-  #include <abstractions/X>
   #include <abstractions/base>
   #include <abstractions/dbus-session-strict>
   #include <abstractions/fonts>
   #include <abstractions/freedesktop.org>
+  #include <abstractions/X>
+
+  / r,
+  /**/ r,
+  /**/*.[pP][dD][fF] r,
 
   /etc/gtk-3.0/settings.ini r,
   /etc/nsswitch.conf r,
   /etc/passwd r,
-  /lib/x86_64-linux-gnu/ld-*.so mr,
-  /usr/bin/atril mr,
-  /usr/lib/x86_64-linux-gnu/webkit2gtk-4.0/WebKitNetworkProcess Ux,
-  /usr/lib/x86_64-linux-gnu/webkit2gtk-4.0/WebKitWebProcess Ux,
   /usr/share/atril/icons/ r,
   /usr/share/atril/icons/** r,
   /usr/share/glib-2.0/schemas/gschemas.compiled r,
   /usr/share/poppler/** r,
   /usr/share/themes/** r,
+  owner /proc/*/cmdline r,
+  owner /proc/*/statm r,
+  owner /run/user/*/dconf/user rw,
+  
+  /lib/x86_64-linux-gnu/ld-*.so mr,
+  /usr/bin/atril mr,
+  /usr/lib/x86_64-linux-gnu/webkit2gtk-4.0/WebKitNetworkProcess Ux,
+  /usr/lib/x86_64-linux-gnu/webkit2gtk-4.0/WebKitWebProcess Ux,
+  
   owner /home/*/.ICEauthority r,
   owner /home/*/.Xauthority r,
   owner /home/*/.config/dconf/user r,
@@ -28,13 +38,4 @@ profile atril /usr/bin/atril {
   owner /home/*/.local/share/recently-used.xbel rw,
   owner /home/*/.local/share/recently-used.xbel.* rw,
   owner /home/*/.local/share/webkitgtk/databases/indexeddb/v0 w,
-  owner /home/*/.local/share/webkitgtk/deviceidhashsalts/1/ r,
-  owner /proc/*/cmdline r,
-  owner /proc/*/statm r,
-  owner /run/user/*/dconf/user rw,
-  
-  / r,
-  /**/ r,
-  /**/*.[pP][dD][fF] r,
-
 }

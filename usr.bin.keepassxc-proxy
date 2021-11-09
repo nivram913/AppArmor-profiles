@@ -1,9 +1,8 @@
-# Last Modified: Sat Jan 11 21:37:59 2020
 #include <tunables/global>
 
 profile keepassxc_proxy /usr/bin/keepassxc-proxy {
-  #include <abstractions/X>
   #include <abstractions/base>
+  #include <abstractions/X>
   
   deny unix peer=(label=/usr/lib/firefox/firefox),
   deny unix peer=(label=/usr/lib/firefox/firefox//firefox_child_sandboxed),
@@ -11,12 +10,12 @@ profile keepassxc_proxy /usr/bin/keepassxc-proxy {
 
   /lib/x86_64-linux-gnu/ld-*.so mr,
   /usr/bin/keepassxc-proxy mr,
+  
   owner /dev/shm/org.mozilla.ipc.* r,
+  owner /run/user/*/kpxc_server rw,
   owner /home/*/.cache/mozilla/firefox/*/startupCache/scriptCache-child-current.bin r,
   owner /home/*/.cache/mozilla/firefox/*/startupCache/scriptCache-current.bin r,
   owner /home/*/.cache/mozilla/firefox/*/startupCache/startupCache.8.little r,
   owner /home/*/.mozilla/firefox/*/.parentlock w,
   owner /home/*/.mozilla/firefox/*/extensions/*.xpi r,
-  owner /run/user/*/kpxc_server rw,
-
 }

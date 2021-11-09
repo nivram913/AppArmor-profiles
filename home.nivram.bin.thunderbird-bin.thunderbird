@@ -1,34 +1,55 @@
-# Last Modified: Sat Jan 11 20:09:06 2020
+# Tested on Thunderbird 91.3.0
+ 
 #include <tunables/global>
+@{EXECUTABLE_DIR}=/home/nivram/bin/thunderbird-bin/
 
 profile thunderbird /home/nivram/bin/thunderbird-bin/thunderbird {
-  #include <abstractions/X>
   #include <abstractions/audio>
   #include <abstractions/base>
+  #include <abstractions/dbus-session-strict>
   #include <abstractions/fonts>
   #include <abstractions/freedesktop.org>
   #include <abstractions/nameservice>
   #include <abstractions/openssl>
   #include <abstractions/user-tmp>
-  #include <abstractions/dbus-session-strict>
+  #include <abstractions/X>
 
   audit deny capability sys_admin,
+  # Prevent entropy modification
   audit deny /dev/urandom w,
   audit deny /dev/random w,
 
-  /dev/ r,
-  /dev/dri/ r,
+  / r,
+  /**/ r,
+
+  /etc/fstab r,
   /etc/gnome/defaults.list r,
   /etc/gtk-3.0/settings.ini r,
   /etc/mime.types r,
-  /etc/xfce4/defaults.list r,
   /etc/thunderbird/syspref.js r,
+  /etc/xfce4/defaults.list r,
   /proc/*/net/arp r,
   /proc/*/net/route r,
   /sys/** r,
+  /usr/share/drirc.d/00-mesa-defaults.conf r,
+  /usr/share/glib-2.0/schemas/gschemas.compiled r,
+  /usr/share/glvnd/egl_vendor.d/* r,
+  /usr/share/gvfs/remote-volume-monitors/* r,
+  /usr/share/themes/** r,
+  /usr/share/xubuntu/applications/defaults.list r,
+  owner /dev/shm/org.chromium.* rw,
+  owner /dev/shm/org.mozilla.ipc.* rw,
+  owner /proc/*/{cgroup,mounts,mountinfo,stat,statm,smaps} r,
+  owner /proc/*/fd/ r,
+  owner /proc/*/task/*/comm rw,
+  owner /proc/*/task/*/stat r,
+  owner /run/user/*/dconf/user rw,
   
-  /home/nivram/bin/thunderbird-bin/thunderbird mrix,
-  /home/nivram/bin/thunderbird-bin/thunderbird-bin mrix,
+  @{EXECUTABLE_DIR}/thunderbird mrix,
+  @{EXECUTABLE_DIR}/thunderbird-bin mrix,
+  @{EXECUTABLE_DIR}/** r,
+  @{EXECUTABLE_DIR}/*.so mr,
+  @{EXECUTABLE_DIR}/*.so.* mr,
   /lib/x86_64-linux-gnu/ld-*.so mr,
   /usr/bin/dig PUx,
   /usr/bin/gpg PUx,
@@ -37,26 +58,6 @@ profile thunderbird /home/nivram/bin/thunderbird-bin/thunderbird {
   /usr/bin/lsb_release PUx,
   /usr/lib/x86_64-linux-gnu/dri/nouveau_dri.so mr,
   
-  /usr/share/drirc.d/ r,
-  /usr/share/drirc.d/00-mesa-defaults.conf r,
-  /usr/share/glib-2.0/schemas/gschemas.compiled r,
-  /usr/share/themes/** r,
-  /usr/share/xfce4/applications/ r,
-  /usr/share/xubuntu/applications/ r,
-  /usr/share/xubuntu/applications/defaults.list r,
-  /usr/share/gvfs/remote-volume-monitors/* r,
-  /usr/share/glvnd/egl_vendor.d/* r,
-  /etc/fstab r,
-  owner /dev/shm/org.chromium.* rw,
-  owner /dev/shm/org.mozilla.ipc.* rw,
-  owner /proc/*/fd/ r,
-  owner /proc/*/{cgroup,mounts,mountinfo,stat,statm,smaps} r,
-  owner /proc/*/task/*/comm rw,
-  owner /proc/*/task/*/stat r,
-  owner /run/user/*/dconf/user rw,
-  
-  owner /home/*/.ICEauthority r,
-  owner /home/*/.Xauthority r,
   owner /home/*/.cache/event-sound-cache* rwk,
   owner /home/*/.cache/fontconfig/* r,
   owner /home/*/.cache/mesa_shader_cache/** rwk,
@@ -67,17 +68,11 @@ profile thunderbird /home/nivram/bin/thunderbird-bin/thunderbird {
   owner /home/*/.config/mimeapps.list r,
   owner /home/*/.gnupg/pubring.kbx r,
   owner /home/*/.gnupg/trustdb.gpg rw,
-  owner /home/*/.local/share/applications/ r,
+  owner /home/*/.ICEauthority r,
   owner /home/*/.local/share/applications/* r,
   owner /home/*/.thunderbird/** rwk,
-  
-  / r,
-  /**/ r,
+  owner /home/*/.Xauthority r,
   owner /home/*/Public/Thunderbird/** rw,
-  
-  /home/nivram/bin/thunderbird-bin/** r,
-  /home/nivram/bin/thunderbird-bin/*.so mr,
-  /home/nivram/bin/thunderbird-bin/*.so.* mr,
   
   dbus send
     bus=system
