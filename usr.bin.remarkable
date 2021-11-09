@@ -1,0 +1,43 @@
+# Last Modified: Sun Oct 11 10:37:59 2020
+#include <tunables/global>
+
+/usr/bin/remarkable {
+  #include <abstractions/X>
+  #include <abstractions/base>
+  #include <abstractions/dbus-session-strict>
+  #include <abstractions/enchant>
+  #include <abstractions/fonts>
+  #include <abstractions/freedesktop.org>
+  #include <abstractions/nameservice>
+  #include <abstractions/python>
+
+  /etc/gtk-3.0/settings.ini r,
+  /lib/x86_64-linux-gnu/ld-*.so mr,
+  /usr/bin/ r,
+  /usr/bin/python3.6 ix,
+  /usr/bin/remarkable r,
+  /usr/share/glib-2.0/schemas/gschemas.compiled r,
+  /usr/share/gtksourceview-2.0/** r,
+  /usr/share/gtksourceview-3.0/** r,
+  /usr/share/remarkable/** r,
+  /usr/share/themes/** r,
+  /usr/share/gvfs/remote-volume-monitors/* r,
+  
+  / r,
+  /**/ r,
+  
+  owner /**.md rw,
+  owner /home/*/.Xauthority r,
+  owner /home/*/.cache/webkit/ w,
+  owner /home/*/.cache/webkit/icondatabase/ rw,
+  owner /home/*/.cache/webkit/icondatabase/WebpageIcons.db rwk,
+  owner /home/*/.cache/webkit/icondatabase/WebpageIcons.db-journal rw,
+  owner /home/*/.config/dconf/user r,
+  owner /home/*/.remarkable/ w,
+  owner /home/*/.remarkable/** rw,
+  owner /proc/*/mounts r,
+  owner /run/user/1000/dconf/user rw,
+  owner /usr/lib/python3/dist-packages/markdown/extensions/__pycache__/* rw,
+  owner /usr/lib/python3/dist-packages/{pdfkit,remarkable,remarkable_lib}/__pycache__/ rw,
+
+}

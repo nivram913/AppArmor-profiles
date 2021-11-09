@@ -15,6 +15,7 @@ profile ristretto /usr/bin/ristretto {
   /etc/xfce4/defaults.list r,
   /usr/share/themes/** r,
   /usr/share/xubuntu/applications/* r,
+  /usr/share/gvfs/remote-volume-monitors/*.monitor r,
   
   /lib/x86_64-linux-gnu/ld-*.so mr,
   /usr/bin/ristretto mr,
