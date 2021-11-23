@@ -152,6 +152,8 @@ profile firefox /usr/lib/firefox/firefox {
       /sys/devices/system/cpu/present r,
       /usr/share/drirc.d/00-mesa-defaults.conf r,
       /usr/share/drirc.d/ r,
+      /usr/share/glvnd/egl_vendor.d/ r,
+      /usr/share/glvnd/egl_vendor.d/* r,
       /usr/share/gvfs/** r,
       /usr/share/themes/** r,
       /usr/share/xfce4/applications/ r,
