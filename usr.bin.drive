@@ -1,0 +1,16 @@
+#include <tunables/global>
+
+profile drive /usr/bin/drive {
+  #include <abstractions/base>
+  #include <abstractions/nameservice>
+  
+  / r,
+  /**/ r,
+  /dev/tty r,
+  /proc/sys/net/core/somaxconn r,
+  /usr/bin/drive mr,
+  
+  owner /**/.gd/ w,
+  owner /**/.gd/credentials.json rw,
+  owner /**/.gd/drivedb rw,
+}
