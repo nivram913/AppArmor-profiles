@@ -11,7 +11,7 @@ This AppArmor profile for Firefox enables it to create sandboxed child processes
 This profile restrict Firefox from executing external applications (like a PDF viewer for downloaded files for example) and allow download/upload of files only from `$HOME/Public/Firefox/` directory.
 
 ## Thunderbird profile
-Version tested : 91.3.0
+Version tested : 91.3.2
 
 Thunderbird is installed from the tar.gz in a custom location specified by the `@{EXECUTABLE_DIR}` variable.
 
@@ -20,7 +20,7 @@ This profile restrict Thunderbird from executing external applications (like a P
 This profile doesn't allow to use the embded update system of Thunderbird, you have to execute Thunderbird unconfined to use the embded update system with `aa-exec -p unconfined $thunderbird_bin`.
 
 ## Signal-desktop profile
-Version tested : 5.23.0
+Version tested : 5.24.0
 
 This profile allow download/upload of attachments only from `$HOME/Public/Signal/` directory.
 
