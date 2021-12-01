@@ -1,6 +1,8 @@
 # AppArmor profiles
 AppArmor profiles used on Xubuntu 20.04.
 
+Full system policy is hard to create and maintain. So, the security principle of my AppArmor policy is to create and maintain AppArmor profiles only for programs that communicate with Internet (broswers, email client, ...) or will parse files downloaded from Internet (image viewer, PDF reader, ...).
+
 ## Firefox profile
 Version tested : 94.0
 
@@ -28,7 +30,10 @@ This profile allow download/upload of attachments only from `$HOME/Public/Signal
 This profile confine KeepassXC-proxy application for broswer integration with Firefox for the moment.
 
 ## Chromium profile
-Unmaintened because Xubuntu 20.04 use Snap for Chromium...
+Unmaintened because Xubuntu 20.04 use Snap for Chromium, so I don't use it anymore...
 
 This profile allow download/upload of files only from `$HOME/Public/Chromium/` directory.
+
+## Drive profile
+https://github.com/odeke-em/drive version 0.3.9.1
 
