@@ -22,7 +22,6 @@ profile clipgrab /usr/local/bin/ClipGrab {
   /usr/bin/ffmpeg PUx,
 
   /bin/fusermount PUx,
-  /dev/dri/ r,
   /dev/fuse rw,
   /etc/machine-id r,
   /etc/udev/udev.conf r,
@@ -32,7 +31,6 @@ profile clipgrab /usr/local/bin/ClipGrab {
   /proc/meminfo r,
   /proc/sys/kernel/random/boot_id r,
   /proc/sys/vm/overcommit_memory r,
-  /sys/bus/pci/devices/ r,
   /sys/devices/pci** r,
 
   /tmp/.mount_Clip*/ r,
@@ -40,7 +38,8 @@ profile clipgrab /usr/local/bin/ClipGrab {
   /tmp/.mount_Clip*/usr/libexec/QtWebEngineProcess ix,
   /tmp/.mount_Clip*/usr/bin/clipgrab mrix,
 
-  /tmp/ r,
+  / r,
+  /**/ r,
   owner /tmp/#[0-9]* mrw,
   owner /home/*/#[0-9]* mrw,
 
@@ -62,15 +61,10 @@ profile clipgrab /usr/local/bin/ClipGrab {
   owner /home/*/.pki/nssdb/cert9.db r,
   owner /home/*/.pki/nssdb/key4.db r,
   owner /home/*/.pki/nssdb/pkcs11.txt r,
-  owner /home/*/ r,
-  owner /home/*/Public/ r,
-  owner /home/*/Public/Clipgrab/ r,
   owner /home/*/Public/Clipgrab/** rwlk,
   owner /home/*/.cache/qt_compose_cache_little_endian_* r,
 
-  /proc/ r,
   owner /proc/** r,
   owner /proc/*/oom_score_adj w,
   owner /proc/*/setgroups w,
-
 }
