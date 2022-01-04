@@ -4,7 +4,7 @@ AppArmor profiles used on Xubuntu 20.04.
 Full system policy is hard to create and maintain. So, the security principle of my AppArmor policy is to create and maintain AppArmor profiles only for programs that communicate with Internet (broswers, email client, ...) or will parse files downloaded from Internet (image viewer, PDF reader, ...).
 
 ## Firefox profile
-Version tested : 94.0
+Version tested : 95.0.1
 
 Firefox has internal security mechanisms to isolate its tabs in different namespaces and chroot its child processes. Current Firefox AppArmor profiles in the wild prenvents Firefox to use these security mechanisms.
 

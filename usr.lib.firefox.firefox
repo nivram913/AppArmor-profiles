@@ -1,4 +1,4 @@
-# Tested on Firefox 94.0
+# Tested on Firefox 95.0.1
 
 #include <tunables/global>
 
@@ -142,6 +142,8 @@ profile firefox /usr/lib/firefox/firefox {
       /dev/dri/ r,
       /etc/gnome/defaults.list r,
       /etc/gtk-3.0/settings.ini r,
+      /etc/glvnd/egl_vendor.d/ r,
+      /etc/glvnd/egl_vendor.d/* r,
       /etc/mailcap r,
       /etc/mime.types r,
       /etc/xfce4/defaults.list r,
@@ -149,6 +151,7 @@ profile firefox /usr/lib/firefox/firefox {
       /sys/devices/pci*/**/{,subsystem_}device r,
       /sys/devices/pci*/**/{,subsystem_}vendor r,
       /sys/devices/pci*/**/uevent r,
+      /sys/devices/pci*/**/drm/ r,
       /sys/devices/system/cpu/present r,
       /usr/share/drirc.d/00-mesa-defaults.conf r,
       /usr/share/drirc.d/ r,
@@ -164,6 +167,7 @@ profile firefox /usr/lib/firefox/firefox {
       owner /proc/*/task/*/stat r,
       owner /tmp/cubeb-shm-*.{input,output} rw,
       owner /tmp/mozilla-temp-* rw,
+      owner /tmp/mozilla_*/* r,
       owner /tmp/Temp-*/mesa_shader_cache/index rw,
       owner /tmp/Temp-*/mesa_shader_cache/**/*.tmp rw,
       
