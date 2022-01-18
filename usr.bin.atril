@@ -4,9 +4,11 @@
 
 profile atril /usr/bin/atril {
   #include <abstractions/base>
+  #include <abstractions/cups-client>
   #include <abstractions/dbus-session-strict>
   #include <abstractions/fonts>
   #include <abstractions/freedesktop.org>
+  #include <abstractions/user-tmp>
   #include <abstractions/X>
 
   / r,
