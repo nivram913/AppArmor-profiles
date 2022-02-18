@@ -11,6 +11,6 @@ profile drive /usr/bin/drive {
   /usr/bin/drive mr,
   
   owner /**/.gd/ w,
-  owner /**/.gd/credentials.json rw,
-  owner /**/.gd/drivedb rw,
+  owner /**/.gd/credentials.json rwk,
+  owner /**/.gd/drivedb rwk,
 }
