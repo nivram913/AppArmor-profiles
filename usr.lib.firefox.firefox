@@ -21,8 +21,9 @@ profile firefox /usr/lib/firefox/firefox {
   signal send set=(term, kill) peer=firefox//firefox_child_sandboxed,
   signal send set=(term, kill) peer=firefox//plugin_container,
 
-  ptrace trace peer=firefox//firefox_child_sandboxed,
+  ptrace (read, trace) peer=firefox//firefox_child_sandboxed,
   ptrace trace peer=firefox//plugin_container,
+  ptrace trace peer=firefox,
   
   unix (send, receive) addr=none peer=(label=firefox//firefox_child_sandboxed),
   unix (send, receive) addr=none peer=(label=firefox//plugin_container),
@@ -53,11 +54,12 @@ profile firefox /usr/lib/firefox/firefox {
   owner /dev/shm/org.mozilla.ipc.* rw,
   owner /proc/*/{cgroup,stat,statm,smaps,mountinfo} r,
   owner /proc/*/task/*/stat r,
-  owner /proc/*/{uid_map,gid_map,setgroups} rw,
+  owner /proc/*/{uid_map,gid_map,setgroups,oom_score_adj} rw,
   owner /run/user/*/dconf/user rw,
   owner /run/user/*/ICEauthority r,
   
   /usr/bin/keepassxc-proxy PUx,
+  /usr/lib/firefox/glxtest PUx,
   /usr/bin/lsb_release PUx,
   /usr/lib/firefox/firefox mr,
   /usr/lib/x86_64-linux-gnu/dri/nouveau_dri.so mr,
