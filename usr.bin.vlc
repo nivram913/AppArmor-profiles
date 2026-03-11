@@ -1,0 +1,31 @@
+#include <tunables/global>
+
+profile vlc /usr/bin/vlc {
+    #include <abstractions/audio>
+    #include <abstractions/base>
+    #include <abstractions/dbus-session-strict>
+    #include <abstractions/fonts>
+    #include <abstractions/freedesktop.org>
+    #include <abstractions/gtk>
+    #include <abstractions/mesa>
+    #include <abstractions/user-tmp>
+    #include <abstractions/X>
+    
+    ptrace (read, trace) peer=vlc,
+
+    /lib/x86_64-linux-gnu/ld-*.so mr,
+    /usr/bin/vlc mr,
+    
+    /sys/** r,
+    /etc/passwd r,
+    /etc/nsswitch.conf r,
+    /proc/** r,
+    
+    owner /home/*/.config/vlc/** rwkl,
+    owner /home/*/.local/share/vlc/** rwkl,
+
+    / r,
+    /**/ r,
+    /**/*.[mM][pP][34]     r,
+    /**/*.[mM]4[aA]        r,
+}
