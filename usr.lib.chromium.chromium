@@ -1,0 +1,133 @@
+# Last Modified: Sun Oct  4 16:52:31 2020
+#include <tunables/global>
+
+profile chromium /usr/lib/chromium/chromium {
+    #include <abstractions/X>
+    #include <abstractions/audio>
+    #include <abstractions/base>
+    #include <abstractions/dbus-session-strict>
+    #include <abstractions/dbus-strict>
+    #include <abstractions/fonts>
+    #include <abstractions/freedesktop.org>
+    #include <abstractions/nameservice>
+    #include <abstractions/user-tmp>
+
+    capability sys_admin,
+    capability sys_chroot,
+    capability sys_ptrace,
+
+    deny ptrace peer=unconfined,
+    ptrace read peer=chromium,
+
+    deny /bin/dash mr,
+
+    # Webcam
+    /dev/video* rw,
+
+    / r,
+    /**/ r,
+    /sys/** r,
+    /proc/** r,
+    /etc/xfce4/defaults.list r,
+    /usr/share/xfce4/applications/mimeinfo.cache r,
+    /etc/mime.types r,
+    /etc/mailcap r,
+    /etc/timezone r,
+    /usr/share/glib-2.0/schemas/gschemas.compiled r,
+    /usr/share/themes/** r,
+    /usr/share/vulkan/** r,
+    owner /proc/**/{uid_map,gid_map,oom_score_adj,setgroups,clear_refs} w,
+    owner /usr/lib/chromium/extensions/ rw,
+    owner /run/user/*/dconf/user r,
+    
+    owner /home/*/.config/chromium/WidevineCdm/*/_platform_specific/linux_x64/libwidevinecdm.so mr,
+    /usr/lib/chromium/chromium mr,
+    /lib/x86_64-linux-gnu/ld-*.so mr,
+    /proc/self/exe mrix,
+    /usr/lib/chromium/chromium mrix,
+    /usr/lib/chromium/chrome_crashpad_handler mrix,
+    /usr/lib/x86_64-linux-gnu/dri/nouveau_dri.so mr,
+
+    owner /home/*/Public/Chromium/** rw,
+    owner /dev/shm/.org.chromium.Chromium.* rw,
+    owner /home/*/#[0-9]* mrw,
+    owner /home/*/.config/dconf/user r,
+    owner /home/*/.Xauthority r,
+    owner /home/*/.cache/chromium/** rw,
+    owner /home/*/.cache/fontconfig/* r,
+    owner /home/*/.cache/mesa_shader_cache/** rwk,
+    owner /home/*/.config/gtk-3.0/bookmarks r,
+    owner /home/*/.config/chromium/** rwk,
+    owner /home/*/.config/user-dirs.dirs r,
+    owner /home/*/.pki/nssdb/cert9.db rwk,
+    owner /home/*/.pki/nssdb/key4.db rwk,
+    owner /home/*/.pki/nssdb/pkcs11.txt r,
+
+    #System bus
+    dbus send
+        bus=system
+        interface=org.freedesktop.DBus.Properties
+        member=Get,
+
+    dbus send
+        interface=org.gtk.Private.RemoteVolumeMonitor
+        member={IsSupported,List},
+
+    dbus send
+        bus=system
+        path=/org/freedesktop/UPower
+        interface=org.freedesktop.UPower
+        member={EnumerateDevices,GetDisplayDevice},
+
+    #Session bus
+
+    dbus send
+        bus=session
+        interface=org.freedesktop.DBus.Properties
+        member=GetAll,
+
+    # Mount service
+    dbus send
+        bus=session
+        path=/org/gtk/vfs/Daemon
+        interface=org.gtk.vfs.Daemon
+        member=ListMonitorImplementations,
+
+    dbus send
+        bus=session
+        path=/org/gtk/vfs/mounttracker
+        interface=org.gtk.vfs.MountTracker
+        member=ListMountableInfo,
+
+    # Secret service
+    dbus send
+        bus=session
+        path=/org/freedesktop/secrets
+        interface=org.freedesktop.Secret.Service
+        member={SearchItems,Unlock,OpenSession},
+
+    dbus send
+        bus=session
+        path=/org/freedesktop/secrets
+        interface=org.freedesktop.Secret.Service
+        member=GetSecrets,
+
+    dbus send
+        bus=session
+        path=/org/freedesktop/secrets/aliases/default
+        interface=org.freedesktop.Secret.Collection
+        member=CreateItem,
+
+    # Screensaver inhibit
+    dbus send
+        bus=session
+        path=/org/freedesktop/ScreenSaver
+        interface=org.freedesktop.ScreenSaver
+        member={Inhibit,UnInhibit},
+
+    dbus send
+        bus=session
+        path=/org/freedesktop/PowerManagement/Inhibit
+        interface=org.freedesktop.PowerManagement.Inhibit
+        member={Inhibit,UnInhibit},
+}
